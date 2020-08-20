@@ -40,12 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Whatsapp Backup Chat Viewer</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
-    <header class="bg-dark text-white text-center">Whatsapp Backup Chat Viewer</header>
+    <header class="brand">
+        <h1>Whatsapp Backup Chat Viewer</h1>
+    </header>
     <main class="container h-100 border rounded">
         <?php
         if (isset($extracted) && $extracted) : ?>
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 echo 'No name Found';
             }
-            echo "<div class='p-3 bg-dark text-light text-center font-bold h4'>$name</div>";
+            echo "<section><h3 class='chat-title'>$name</h3>";
             foreach ($fr as $line) {
                 $string = $line;
                 $pattern = '/(?<time>[0-9]+\/[0-9]+\/[0-9]+,\s[0-9:APM ]+)\s+\-\s+(?<sender>[A-Za-z0-9 ]+):(?<message>.*)/i';
@@ -68,21 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sender = $matches['sender'];
                     $message = $matches['message'];
                     if ($sender != $name) {
-                        echo "<div class='block border mr-auto w-75 m-2 p-2 bg-white text-dark rounded'>
-        <div class='flex d-flex justify-content-between'>
-            <p class=''>$sender</p>
-            <span class='text-dark'>$time</span>
-        </div>
-        <p class='chat'>$message</p>
-    </div>";
+                        echo "<div class='message right'>
+                                <div class='flex-justify-between'>
+                                    <p class='sender'>$sender</p>
+                                    <span class='time'>$time</span>
+                                </div>
+                                <p class='chat'>$message</p>
+                            </div>";
                     } else {
-                        echo "<div class='block ml-auto w-75 m-2 p-2 bg-success text-dark rounded'>
-        <div class='flex d-flex justify-content-between'>
-            <p class=''>$sender</p>
-            <span class='text-white'>$time</span>
-        </div>
-        <p class='chat'>$message</p>
-    </div>";
+                        echo "<div class='message left'>
+                                <div class='flex-justify-between'>
+                                    <p class='sender'>$sender</p>
+                                    <span class='time'>$time</span>
+                                </div>
+                                <p class='chat'>$message</p>
+                            </div>";
                     }
                 } else {
                     $pattern = '/(?<time>[0-9]+\/[0-9]+\/[0-9]+,\s[0-9: ]+[PA]M)\s+\-\s(?<message>.*)/i';
@@ -90,33 +91,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $time = $matches['time'];
                         $message = $matches['message'];
 
-                        echo "<div class='block mr-auto w-75 m-2 p-2 bg-success text-dark rounded'>
-        <div class='flex d-flex justify-content-between'>
-            <span class='text-white'>$time</span>
-        </div>
-        <p class='chat'>$message</p>
-    </div>";
+                        echo "<div class='message center'>
+                                <div class='flex-justify-between'>
+                                    <span class='text-white'>$time</span>
+                                </div>
+                                <p class='chat'>$message</p>
+                            </div>";
                     } else {
-                        echo "<div class='block mr-auto w-75 m-2 p-2 bg-success text-dark rounded'>
-        <p class='chat'>$string</p>
-    </div>";
+                        echo "<div class='message center'>
+                                <p class='chat'>$string</p>
+                            </div>";
                     }
                 }
             }
-            echo '</div>';
+            echo '</section>';
 
             ?>
         <?php else : ?>
             <form action="" method="post" enctype="multipart/form-data" class="bg-dark text-white border rounded p-3">
-                <div class="lead center">Upload Exported Chat </div>
-                <div class="form-group">
+                <h2 class="lead center">Upload Exported Chat </h2>
+                <div class="flex-col">
                     <label for="fupload">Upload Backup File(ZIP)</label>
                     <input type="file" name="fupload" id="fupload" class="form-control">
                     <small class="text-muted">Only ZIP file allowed.</small>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Upload" class="form-control btn btn-primary">
-                </div>
+                <input type="submit" value="Upload" class="form-control btn btn-primary">
             </form>
         <?php endif; ?>
     </main>
