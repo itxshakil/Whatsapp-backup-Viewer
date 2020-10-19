@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($extracted) && $extracted) : ?>
             <?php
             $chat_file = $chatPath . '.txt';
-            $fr = file($chat_file);
+            $filearray = file($chat_file);
             $pattern = '/Whatsapp Chat with\s(?<name>[a-zA-Z0-9].+)/i';
             $string = $uploadFilename[0];
             if (preg_match($pattern, $string, $matches)) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo 'No name Found';
             }
             echo "<section><h3 class='chat-title'>$name</h3>";
-            foreach ($fr as $line) {
+            foreach ($filearray as $line) {
                 $string = $line;
                 $pattern = '/(?<time>[0-9]+\/[0-9]+\/[0-9]+,\s[0-9:APM ]+)\s+\-\s+(?<sender>[A-Za-z0-9 ]+):(?<message>.*)/i';
                 if (preg_match($pattern, $string, $matches)) {
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $sender = $matches['sender'];
                     $message = $matches['message'];
                     if ($sender != $name) {
-                        echo "<div class='message right'>
+                        echo "<div class='message left'>
                                 <div class='flex-justify-between'>
                                     <p class='sender'>$sender</p>
                                     <span class='time'>$time</span>
@@ -76,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <p class='chat'>$message</p>
                             </div>";
                     } else {
-                        echo "<div class='message left'>
+                        echo "<div class='message right'>
                                 <div class='flex-justify-between'>
                                     <p class='sender'>$sender</p>
                                     <span class='time'>$time</span>
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                         echo "<div class='message center'>
                                 <div class='flex-justify-between'>
-                                    <span class='text-white'>$time</span>
+                                    <span class='text-white time'>$time</span>
                                 </div>
                                 <p class='chat'>$message</p>
                             </div>";
@@ -109,9 +109,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php else : ?>
             <form action="" method="post" enctype="multipart/form-data" class="bg-dark text-white border rounded p-3">
                 <h2 class="lead center mb-2">Upload Exported Chat </h2>
+                <?php if(isset($errors) && $errors):?>
                 <?php foreach ($errors as $key => $value) : ?>
                     <p class="alert"><?= $value; ?></p>
                 <?php endforeach; ?>
+                <?php endif; ?>
                 <div class="flex-col mt-2">
                     <label for="fupload">Upload Backup File(ZIP)</label>
                     <input type="file" name="fupload" id="fupload" class="form-control">
@@ -123,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </main>
 
     <footer>
-        &copy; 2018 All Right Reserved.
+        &copy; 2020 All Right Reserved.
         <br>
         Designed with <span style="color:red;">♥</span> by <a href="mailto:itxshakil@gmail.com" class="text-primary">Shakil Alam</a>
     </footer>

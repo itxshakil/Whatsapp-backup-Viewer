@@ -81,10 +81,9 @@ form input[type="submit"] {
   color: white;
 }
 h3.chat-title {
-  padding: 0.4rem;
-  background: #333;
+  padding: 0.5rem;
+  background: #075E54;
   color: var(--cream);
-  font-weight: bold;
 }
 section {
   overflow: hidden;
@@ -95,27 +94,32 @@ section {
 }
 section .message {
   width: 70%;
-  margin: 0.4rem;
-  padding: 0.4rem;
-  border-radius: 0.3rem;
-  box-shadow: 1px 1px 3px #555;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
   background: whitesmoke;
   color: #333;
 }
 .message.right {
   margin-right: auto;
+  border-radius:0 0.5rem 0.5rem 0.5rem;
 }
 .message.left {
+  border-radius: 0.5rem 0  0.5rem 0.5rem;
   margin-left: auto;
-  background: var(--success);
-  color: whitesmoke;
+  background: #4AC959;
+  color:whitesmoke;
 }
 .message.center {
   margin-left: auto;
   margin-right: auto;
 }
 .message .time {
+  font-size: 0.5rem;
+}
+.message .sender{
   font-size: 0.75rem;
+  margin-bottom: 0.2rem;
 }
 .message .chat {
   font-size: 0.9rem;
