@@ -11,21 +11,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $accepted_types = array('application/zip', 'application/x-zip-compressed', 'multipart/x-zip', 'application/s-compressed');
 
         if (array_search($_FILES['fupload']['type'], $accepted_types)) {
-        } else {
-            $errors['file_type_mismatch'] = 'Please choose a ZIP file. we said ZIP.';
-        }
+            if (mkdir($extractDirectory, true)) {
+                $chatPath =  $extractDirectory . $uploadFilename[0];
 
-        if (mkdir($extractDirectory, true)) {
-            $chatPath =  $extractDirectory . $uploadFilename[0];
-
-            if (move_uploaded_file($_FILES['fupload']['tmp_name'], $chatPath)) {
-                include_once 'extract.php';
-                $extracted = extractZIP($chatPath, $extractDirectory);
+                if (move_uploaded_file($_FILES['fupload']['tmp_name'], $chatPath)) {
+                    include_once 'extract.php';
+                    $extracted = extractZIP($chatPath, $extractDirectory);
+                } else {
+                    $errors['err-upload'] = 'There was a Problem . Please Try Again .';
+                }
             } else {
-                $errors['err-upload'] = 'There was a Problem . Please Try Again .';
+                $errors['server'] = 'Server Error. Its our fault.';
             }
         } else {
-            $errors['server'] = 'Server Error. Its our fault.';
+            $errors['file_type_mismatch'] = 'Please choose a ZIP file. we said ZIP.';
         }
     } else {
         $errors['file_not_found'] = 'Please choose a file';
