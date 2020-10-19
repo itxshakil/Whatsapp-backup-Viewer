@@ -131,3 +131,8 @@ section .message {
   display: flex;
   justify-content: space-between;
 }
+.alert{
+  font-size: small;
+  color:#e51c23;
+  margin-bottom:.5rem;
+}

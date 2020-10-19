@@ -108,8 +108,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ?>
         <?php else : ?>
             <form action="" method="post" enctype="multipart/form-data" class="bg-dark text-white border rounded p-3">
-                <h2 class="lead center">Upload Exported Chat </h2>
-                <div class="flex-col">
+                <h2 class="lead center mb-2">Upload Exported Chat </h2>
+                <?php foreach ($errors as $key => $value) : ?>
+                    <p class="alert"><?= $value; ?></p>
+                <?php endforeach; ?>
+                <div class="flex-col mt-2">
                     <label for="fupload">Upload Backup File(ZIP)</label>
                     <input type="file" name="fupload" id="fupload" class="form-control">
                     <small class="text-muted">Only ZIP file allowed.</small>
