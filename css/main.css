@@ -33,6 +33,7 @@ main {
 .container {
   width: 70%;
   min-width: 300px;
+  max-width: 480px;
   margin: 0 auto;
 }
 footer {
@@ -83,7 +84,6 @@ h3.chat-title {
   padding: 0.4rem;
   background: #333;
   color: var(--cream);
-  text-align: center;
   font-weight: bold;
 }
 section {
